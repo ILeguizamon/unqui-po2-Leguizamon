@@ -56,7 +56,7 @@ En el sistema de archivos, los paquetes se representan como directorios dentro d
 
 **Dentro de la carpeta `src` hay una imagen llamada `directorio2.0` donde se puede observar la estructura de directorio**
 
-![estructuraDirectorios](images/directorio2.0.PNG)
+![directorio2.0](images/directorio2.0.PNG)
             
 El archivo MainAPP.java está en la carpeta model.
 
