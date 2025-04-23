@@ -1,7 +1,7 @@
 # TP 2 UML - IVAN LEGUIZAMON
 
 
-# EJERCICIO 1:
+# Ejercicio 1:
 # C) Muestre en dos scripts de código cómo instancia un escenario concreto en el cual se dispare: 
 	#I) el cálculo del total de sueldos neto  
 	#II) la liquidación de sueldo.
