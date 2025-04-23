@@ -54,9 +54,7 @@ En Java, los tipos de datos primitivos son los tipos más simples de datos que e
 # 1. ¿Cómo están organizadas en el sistema de archivos?
 En el sistema de archivos, los paquetes se representan como directorios dentro de la carpeta raíz del proyecto (en este caso model).
 
-**Dentro de la carpeta `src` hay una imagen llamada `directorio2.0` donde se puede observar la estructura de directorio**
-
-![directorio2.0](images/directorio2.0.PNG)
+**Dentro de la carpeta `Images` hay una imagen llamada `directorio2.0` donde se puede observar la estructura de directorio**
             
 El archivo MainAPP.java está en la carpeta model.
 
