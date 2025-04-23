@@ -1,10 +1,10 @@
-#*Ejercicio 4) Examinar las expresiones:*
+# Ejercicio 4) Examinar las expresiones:
 
 **Demostración en la clase Prueba**.
 
 ---
 ---
-#*Ejercicio 5) Tipos primitivos:*
+# Ejercicio 5) Tipos primitivos:
 <br>
 
 # 1. ¿Qué son los tipos de datos primitivos?
@@ -33,7 +33,7 @@ En Java, los tipos de datos primitivos son los tipos más simples de datos que e
 - `Integer` puede ser `null` (ya que es un objeto), mientras que `int` no puede.
 - `Integer` ofrece métodos adicionales para trabajar con números enteros.
 
-#3. ¿Si se define una variable de instancia de tipo int cual sería su valor predeterminado? ¿Y si se define una de tipo Integer? Haga la prueba en Eclipse.
+# 3. ¿Si se define una variable de instancia de tipo int cual sería su valor predeterminado? ¿Y si se define una de tipo Integer? Haga la prueba en Eclipse.
 
 - **int**: Las variables de instancia de tipo primitivo tienen un valor predeterminado. Si no se les asigna ningún valor, el valor predeterminado para un int es 0.
 
@@ -48,7 +48,7 @@ En Java, los tipos de datos primitivos son los tipos más simples de datos que e
 
 ---
 ---
-#*Ejercicio 7) Jerarquía de paquetes:*
+# Ejercicio 7) Jerarquía de paquetes:
 <br>
 
 # 1. ¿Cómo están organizadas en el sistema de archivos?
@@ -68,7 +68,7 @@ Sí, la estructura de los paquetes en Java refleja directamente la ubicación de
 
 ---
 ---
-#*Ejercicio 10) Encapsulamiento:*
+# Ejercicio 10) Encapsulamiento: 
 <br>
 
 # 1. Responder: Si un objeto cualquiera que le pide la edad a una Persona: ¿Conoce cómo ésta calcula u obtiene tal valor? ¿Cómo se llama el mecanismo de abstracción que permite esto?
