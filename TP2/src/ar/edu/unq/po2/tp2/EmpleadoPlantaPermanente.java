@@ -34,15 +34,15 @@ public class EmpleadoPlantaPermanente extends Empleado {
     }
 
     // ---------------- CALCULOS POR ASIGNACIÓN ---------------
-    public double salarioFamiliar() {
+    private double salarioFamiliar() {
         return sueldoAsignacionPorHijo() + sueldoAsignacionPorConyuge() + sueldoAsignacionPorAntiguedad();
     }
 
-    public double sueldoAsignacionPorAntiguedad() {
+    private double sueldoAsignacionPorAntiguedad() {
         return this.getAntiguedad() * 50.0; 
     }
 
-    public double sueldoAsignacionPorConyuge() {
+    private double sueldoAsignacionPorConyuge() {
         if (getEstadoCivil().toLowerCase().equals("casado") || getEstadoCivil().toLowerCase().equals("casada")) {
             return 100.0;
         } else {
@@ -50,7 +50,7 @@ public class EmpleadoPlantaPermanente extends Empleado {
         }
     }
 
-    public double sueldoAsignacionPorHijo() {
+    private double sueldoAsignacionPorHijo() {
         return this.getCantidadHijos() * 150.0;
     }
 
@@ -74,28 +74,23 @@ public class EmpleadoPlantaPermanente extends Empleado {
     public double retenciones() {
         return this.retencionPorObraSocial() + this.retencionPorAportesJubilatorios();
     }
-
+    
+    // ------------- NUEVO MÉTODO DE DETALLE -------------
     @Override
-    public List<String> desgloseDeConceptos() {
-        List<String> conceptos = new ArrayList<>();
-
-        conceptos.add("Sueldo Básico: " + this.getSueldoBasico());
-
-        if (this.getAntiguedad() > 0) {
-            conceptos.add("Adicional por Antigüedad: " + this.sueldoAsignacionPorAntiguedad());
-        }
-
-        if (this.getCantidadHijos() > 0) {
-            conceptos.add("Adicional por Hijos: " + this.sueldoAsignacionPorHijo());
-        }
-
-        if (this.getEstadoCivil().equalsIgnoreCase("casado") || this.getEstadoCivil().equalsIgnoreCase("casada")) {
-            conceptos.add("Asignación por Cónyuge: " + this.sueldoAsignacionPorConyuge());
-        }
-
-        conceptos.add("Aportes Jubilatorios: " + this.retencionPorAportesJubilatorios());
-        conceptos.add("Obra Social: " + this.retencionPorObraSocial());
-
+    public List<Concepto> getConceptos() {
+        List<Concepto> conceptos = new ArrayList<>();
+        
+        // Componentes del sueldo bruto
+        conceptos.add(new Concepto("Sueldo Básico", this.getSueldoBasico()));
+        conceptos.add(new Concepto("Asignación por Antigüedad (" + this.getAntiguedad() + " años)", this.sueldoAsignacionPorAntiguedad()));
+        conceptos.add(new Concepto("Asignación por Cónyuge (" + this.getEstadoCivil() + ")", this.sueldoAsignacionPorConyuge()));
+        conceptos.add(new Concepto("Asignación por Hijos (" + this.getCantidadHijos() + " hijos)", this.sueldoAsignacionPorHijo()));
+        
+        // Retenciones
+        conceptos.add(new Concepto("Retención por Obra Social", -this.retencionPorObraSocial()));
+        conceptos.add(new Concepto("Retención por Aportes Jubilatorios", -this.retencionPorAportesJubilatorios()));
+        
         return conceptos;
     }
+
 }

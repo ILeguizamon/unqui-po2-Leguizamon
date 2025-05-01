@@ -2,7 +2,6 @@ package ar.edu.unq.po2.tp2;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Empleado {
@@ -11,7 +10,6 @@ public abstract class Empleado {
     private String estadoCivil;
     private LocalDate fechaDeNacimiento;
     private double sueldoBasico;
-    private List<ReciboDeHaberes> recibos;
 
     // ---------------- CONSTRUCTOR -----------------------------
     public Empleado(String nombre, String direccion, String estadoCivil, LocalDate fechaDeNacimiento, double sueldoBasico) {
@@ -20,7 +18,6 @@ public abstract class Empleado {
         this.estadoCivil = estadoCivil;
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.sueldoBasico = sueldoBasico;
-        this.recibos = new ArrayList<ReciboDeHaberes>();
     }
 
     // ---------------- GETTERS & SETTERS -----------------------------
@@ -64,20 +61,13 @@ public abstract class Empleado {
         this.sueldoBasico = sueldoBasico;
     }
 
-    public List<ReciboDeHaberes> getRecibos() {
-        return this.recibos;
-    }
-
     public int edad() {
         return Period.between(this.getFechaDeNacimiento(), LocalDate.now()).getYears();
     }
 
+    
     public double sueldoNeto() {
         return this.sueldoBruto() - this.retenciones();
-    }
-
-    public double diezPorCientoSueldoBruto() {
-        return (this.sueldoBruto() * 10) / 100;
     }
 
     // ---------------- MÉTODOS ABSTRACTOS -------------------
@@ -89,26 +79,6 @@ public abstract class Empleado {
 
     public abstract double retencionPorAportesJubilatorios();
 
-    public abstract List<String> desgloseDeConceptos();
-
-    // ---------------- MÉTODOS PARA EL RECIBO -------------------
-    public ReciboDeHaberes generarRecibo() {
-        ReciboDeHaberes recibo = new ReciboDeHaberes();
-        recibo.setNombreEmpleado(this.getNombre());
-        recibo.setDireccionEmpleado(this.getDireccion());
-        recibo.setFechaEmision(LocalDate.now()); // Utilizando LocalDate
-        recibo.setSueldoBruto(this.sueldoBruto());
-        recibo.setSueldoNeto(this.sueldoNeto());
-        recibo.setConceptos(this.desgloseDeConceptos());
-
-        return recibo;
-    }
-
-    public void generarYGuardarRecibo() {
-        this.guardarRecibo(this.generarRecibo());
-    }
-
-    public void guardarRecibo(ReciboDeHaberes unRecibo) {
-        this.recibos.add(unRecibo);
-    }
+    // NUEVO:
+    public abstract List<Concepto> getConceptos();
 }

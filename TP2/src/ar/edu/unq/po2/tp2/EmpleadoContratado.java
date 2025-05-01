@@ -44,17 +44,6 @@ public class EmpleadoContratado extends Empleado {
         return this.getSueldoBasico();
     }
 
-    @Override
-    public List<String> desgloseDeConceptos() {
-        List<String> conceptos = new ArrayList<>();
-        
-        conceptos.add("Sueldo Básico: " + this.getSueldoBasico());
-        conceptos.add("Gastos Administrativos Contractuales: " + this.retenciones());
-        conceptos.add("Medio de Pago: " + this.getMedioDePago());
-        
-        return conceptos;
-    }
-
     // Métodos sobrescritos debido a que la clase base Empleado los define como abstractos.
     // Como el tipo EmpleadoContratado no tiene retenciones de obra social ni aportes jubilatorios,
     // se devuelve 0.0 para cumplir con la obligación de definir estos métodos sin aplicar una lógica específica.
@@ -67,4 +56,14 @@ public class EmpleadoContratado extends Empleado {
     public double retencionPorAportesJubilatorios() {
         return 0.0;
     }
+    
+    // ------------- NUEVO MÉTODO DE DETALLE -------------
+    @Override
+    public List<Concepto> getConceptos() {
+        List<Concepto> conceptos = new ArrayList<>();
+        conceptos.add(new Concepto("Sueldo Básico", this.getSueldoBasico()));
+        conceptos.add(new Concepto("Gastos Administrativos Contractuales", -this.retenciones()));
+        return conceptos;
+    }
 }
+

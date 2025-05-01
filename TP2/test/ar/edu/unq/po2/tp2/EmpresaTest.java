@@ -17,7 +17,7 @@ public class EmpresaTest {
 
     @BeforeEach
     public void setUp() {
-        empresa = new Empresa("DataCorp", "30-71598236-5");
+        empresa = new Empresa("DataCorp", "28-26352718-9");
 
         empleadoPermanente = new EmpleadoPlantaPermanente(
                 "Ivan Leguizamon",
@@ -54,18 +54,39 @@ public class EmpresaTest {
         empresa.agregarEmpleado(empleadoContratado);
     }
     
+    // ------- EJERCICIOS 1 C) y EJERCICIO 2 D) ----------
     @Test
-    public void testEmpresaAgregaEmpleadosYCuentaCorrectamente() {
-        int cantidad = empresa.getEmpleados().size();
-        System.out.println("Cantidad de empleados en la empresa: " + cantidad);
-        assertEquals(3, cantidad);
+    public void testEmpresaGeneraRecibosParaTodos() {
+        empresa.liquidacionDeSueldos();
+
+        List<ReciboDeHaberes> recibos = empresa.getReciboDeHaberes();
+
+        assertEquals(3, recibos.size());
+
+        boolean encontradoIvan = false;
+        boolean encontradoJuana = false;
+        boolean encontradoCarlos = false;
+
+        for (ReciboDeHaberes recibo : recibos) {
+            if (recibo.getNombreEmpleado().equals("Ivan Leguizamon")) {
+                encontradoIvan = true;
+            }
+            if (recibo.getNombreEmpleado().equals("Juana Diaz")) {
+                encontradoJuana = true;
+            }
+            if (recibo.getNombreEmpleado().equals("Carlos Perez")) {
+                encontradoCarlos = true;
+            }
+        }
+
+        assertTrue(encontradoIvan);
+        assertTrue(encontradoJuana);
+        assertTrue(encontradoCarlos);
     }
-    
-    
-    // ------------------- EJERCICIO 1 C) - CÁLCULO DEL TOTAL DE SUELDOS NETOS ------------------------
+
     @Test
     public void testEmpresaCalculaCorrectamenteTotales() {
-        empresa.generarRecibosParaTodos();
+        empresa.liquidacionDeSueldos();
 
         double totalBrutoEsperado = 0.0;
         double totalNetoEsperado = 0.0;
@@ -81,27 +102,30 @@ public class EmpresaTest {
         double netoCalculado = empresa.totalSueldosNetos();
         double retencionesCalculadas = empresa.totalRetenciones();
 
-        System.out.println("Total Sueldos Brutos Esperado: " + totalBrutoEsperado + " | Calculado: " + brutoCalculado);
-        System.out.println("Total Sueldos Netos Esperado: " + totalNetoEsperado + " | Calculado: " + netoCalculado);
-        System.out.println("Total Retenciones Esperadas: " + totalRetencionesEsperado + " | Calculadas: " + retencionesCalculadas);
-
         assertEquals(totalBrutoEsperado, brutoCalculado);
         assertEquals(totalNetoEsperado, netoCalculado);
         assertEquals(totalRetencionesEsperado, retencionesCalculadas);
     }
-    
-    
-    // ------------------- EJERCICIO 1 C) - LIQUIDACIÓN DE SUELDOS ------------------------
+
     @Test
-    public void testEmpresaGeneraRecibosParaTodos() {
-        empresa.generarRecibosParaTodos();
+    public void testLiquidacionDeSueldos() {
+        empresa.liquidacionDeSueldos();
 
-        for (Empleado empleado : empresa.getEmpleados()) {
-            List<ReciboDeHaberes> recibos = empleado.getRecibos();
-            System.out.println("Empleado: " + empleado.getNombre() + " tiene " + recibos.size() + " recibo/s.");
-            assertEquals(1, recibos.size(), "El empleado " + empleado.getNombre() + " debería tener un recibo");
+        List<ReciboDeHaberes> recibos = empresa.getReciboDeHaberes();
+
+        for (ReciboDeHaberes recibo : recibos) {
+            System.out.println("=== Recibo de " + recibo.getNombreEmpleado() + " ===");
+            System.out.println("Sueldo bruto: $" + recibo.getSueldoBruto());
+            System.out.println("Sueldo neto: $" + recibo.getSueldoNeto());
+            System.out.println("Fecha de emisión: " + recibo.getFechaEmision());
+            
+            for (Concepto concepto : recibo.getConceptos()) {
+                System.out.println(concepto.getDescripcion() + ": $" + concepto.getMonto());
+            }
+
+            System.out.println("-------------------------------------------");
         }
+
+        assertEquals(3, recibos.size(), "Debe generarse un recibo por cada empleado");
     }
-
 }
-

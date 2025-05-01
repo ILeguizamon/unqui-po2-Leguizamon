@@ -34,7 +34,7 @@ public class EmpleadoPlantaTemporaria extends Empleado {
     }
 
     // ---------------- MÉTODOS ADICIONALES -------------------
-    public double extraPorEdadMayorACincuenta() {
+    private double extraPorEdadMayorACincuenta() {
         if (this.edad() > 50) {
             return 25.0;
         } else {
@@ -62,20 +62,26 @@ public class EmpleadoPlantaTemporaria extends Empleado {
     public double retenciones() {
         return this.retencionPorObraSocial() + this.retencionPorAportesJubilatorios(); 
     }
-
+    
+    // ------------- NUEVO MÉTODO DE DETALLE -------------
     @Override
-    public List<String> desgloseDeConceptos() {
-        List<String> conceptos = new ArrayList<>();
-
-        conceptos.add("Sueldo Básico: " + this.getSueldoBasico());
-
-        if (this.getCantHorasExtras() > 0) {
-            conceptos.add("Pago por Horas Extras: " + (this.getCantHorasExtras() * 5));
-        }
-
-        conceptos.add("Aportes Jubilatorios: " + this.retencionPorAportesJubilatorios());
-        conceptos.add("Obra Social: " + this.retencionPorObraSocial());
-
+    public List<Concepto> getConceptos() {
+        List<Concepto> conceptos = new ArrayList<>();
+        
+        // Sueldo básico
+        conceptos.add(new Concepto("Sueldo Básico", this.getSueldoBasico()));
+        
+        // Horas extras
+        double montoHorasExtras = this.getCantHorasExtras() * 40;
+        conceptos.add(new Concepto("Pago por Horas Extras (" + this.getCantHorasExtras() + " hs)", montoHorasExtras));
+        
+        // Retención por obra social (incluye extra si es mayor a 50)
+        conceptos.add(new Concepto("Retención por Obra Social (incluye +$25 si > 50 años)", -this.retencionPorObraSocial()));
+        
+        // Retención por aportes jubilatorios (incluye $5 por hora extra)
+        conceptos.add(new Concepto("Retención por Aportes Jubilatorios (+$5 por hora extra)", -this.retencionPorAportesJubilatorios()));
+        
         return conceptos;
     }
+
 }
